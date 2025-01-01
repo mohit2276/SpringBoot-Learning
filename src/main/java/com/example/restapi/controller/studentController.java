@@ -25,6 +25,11 @@ public class studentController {
 	
 	 @Autowired
 	    private StudentService studentService;
+	 
+	 @GetMapping("/")
+	 public String home() {
+		 return("<h1>Welcome</h1>");
+	 }
 
 	    @GetMapping("/students")
 	    public ResponseEntity<List<student>> getAllStudents() {
