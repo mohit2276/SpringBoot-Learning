@@ -3,6 +3,8 @@ package com.example.restapi.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,9 @@ import com.example.restapi.repository.service.StudentService;
 @RestController
 @RequestMapping("/api")
 public class studentController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(studentController.class);
+	
 
 	
 	 @Autowired
@@ -28,11 +33,13 @@ public class studentController {
 	 
 	 @GetMapping("/")
 	 public String home() {
+		 logger.info("Home endpoint accessed.");
 		 return("<h1>Welcome</h1>");
 	 }
 
 	    @GetMapping("/students")
 	    public ResponseEntity<List<student>> getAllStudents() {
+	    	logger.debug("Fetching all students.");
 	        return ResponseEntity.ok(studentService.getAllStudents());
 	    }
 
@@ -41,8 +48,10 @@ public class studentController {
 	    public ResponseEntity<?> getStudentById(@PathVariable int id) {
 	        Optional<student> studentOptional = studentService.getStudentById(id);
 	        if (studentOptional.isPresent()) {
+	        	logger.debug("student id found ");
 	            return ResponseEntity.ok(studentOptional.get());
 	        } else {
+	        	logger.error("Student id not found");
 	            return ResponseEntity.status(404).body("Student with ID " + id + " not found.");
 	        }
 	    }
@@ -51,6 +60,7 @@ public class studentController {
 
 	    @PostMapping("/studentscreate")
 	    public ResponseEntity<student> createStudent(@RequestBody student studen) {
+	    	logger.debug("student created successfully");
 	        return ResponseEntity.ok(studentService.createStudent(studen));
 	    }
 
@@ -59,6 +69,7 @@ public class studentController {
 	        try {
 	            return ResponseEntity.ok(studentService.updateStudent(id, updatedStudent));
 	        } catch (RuntimeException e) {
+	        	logger.error("student details  not updated ");
 	            return ResponseEntity.status(404).body(e.getMessage());
 	        }
 	    }
