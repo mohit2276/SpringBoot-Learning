@@ -1,12 +1,16 @@
 package com.example.restapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restapi.entity.student;
-import com.example.restapi.repository.studentRepository;
+
 import com.example.restapi.repository.service.StudentService;
 
 @RestController
@@ -30,6 +34,7 @@ public class studentController {
 	
 	 @Autowired
 	    private StudentService studentService;
+
 	 
 	 @GetMapping("/")
 	 public String home() {
